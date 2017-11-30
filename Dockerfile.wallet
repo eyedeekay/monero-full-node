@@ -17,6 +17,5 @@ RUN mv -v monero*/* wallet
 
 WORKDIR /home/moneroclient/wallet
 
-RUN ls
 CMD ./monero-wallet-cli
 
