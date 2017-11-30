@@ -1,0 +1,22 @@
+# Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/monero/.bitmonero --network=host --name=monerod -td monero-full-node
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y wget bzip2 paxctl
+RUN adduser --disabled-password --home /home/moneroclient moneroclient
+RUN chown -R moneroclient:moneroclient /home/moneroclient
+USER moneroclient
+WORKDIR /home/moneroclient
+
+RUN wget https://downloads.getmonero.org/linux64 && \
+        echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
+        tar jxvf linux64 && \
+        rm linux64 && \
+        mkdir wallet
+
+RUN mv -v monero*/* wallet
+
+WORKDIR /home/moneroclient/wallet
+
+RUN ls
+CMD ./monero-wallet-cli
+
