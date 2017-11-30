@@ -1,6 +1,6 @@
 
 wallet:
-	docker build --force-rm -f Dockerfile.wallet -t monero-full-node .
+	docker build --force-rm -f Dockerfile.wallet -t monero-wallet .
 
 build:
 	docker build --force-rm -t monero-full-node .
