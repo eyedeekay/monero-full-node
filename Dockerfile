@@ -3,7 +3,7 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y curl bzip2 paxctl wget
 
-RUN adduser --disabled-password --home /home/monero monero
+RUN adduser --disabled-password --gecos '' q--home /home/monero monero
 RUN chown -R monero:monero /home/monero
 USER monero
 WORKDIR /home/monero
@@ -34,6 +34,8 @@ USER monero
 VOLUME /home/monero/.bitmonero
 
 EXPOSE 18080 18081
+
+RUN monerod --help
 
 ENTRYPOINT ["/usr/bin/monerod"]
 CMD ["--restricted-rpc", "--rpc-bind-ip=0.0.0.0", "--confirm-external-bind"]
