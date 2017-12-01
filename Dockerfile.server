@@ -4,7 +4,7 @@ FROM debian:sid
 RUN apt-get update
 RUN apt-get install -y curl bzip2 paxctl wget
 
-RUN adduser --disabled-password --gecos '' q--home /home/monero monero
+RUN adduser --disabled-password --gecos '' --home /home/monero monero
 RUN chown -R monero:monero /home/monero
 WORKDIR /home/monero
 

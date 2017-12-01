@@ -25,6 +25,9 @@ wallet: password
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 
+wallet-clean:
+	docker rm -f monero-wallet
+
 wallet-run:
 	docker run -d --rm \
 		--cap-drop all \
@@ -35,6 +38,8 @@ wallet-run:
 		--name=monero-wallet \
 		--interactive=true \
 		-t monero-wallet
+
+wallet-update: update wallet wallet-clean wallet-run
 
 wallet-list:
 	docker exec -ti monero-wallet ls
@@ -65,13 +70,18 @@ daemon-old:
 daemon:
 	docker build --force-rm -f Dockerfile.server -t monero-full-node . | tee server-info.log
 
+daemon-clean:
+	docker rm -f monero-full-node
+
 daemon-run:
 	docker run -d --rm \
 		--cap-drop all \
 		-v $(HOME)/blockchain-xmr:/home/monero/.bitmonero \
 		--network=host \
-		--name=monerod \
+		--name=monero-full-node \
 		-td monero-full-node
+
+wallet-update: update daemon daemon-clean daemon-run
 
 clobber-daemon:
 	docker rm -f monero-full-node; \
