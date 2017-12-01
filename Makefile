@@ -26,7 +26,7 @@ wallet: password
 		-t monero-wallet . | tee wallet-info.log
 
 wallet-run:
-	docker run --rm \
+	docker run -d --rm \
 		--cap-drop all \
 		--env="daemon_host=$(daemon_host)" \
 		--env="daemon_port=$(daemon_port)" \
