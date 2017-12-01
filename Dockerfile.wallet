@@ -36,7 +36,8 @@ RUN ls
 
 WORKDIR /home/xmrwallet/wallet
 
-CMD cp ../wallet.bak/* . &&  monero-wallet-cli \
+CMD cp ../wallet.bak/* . &&
+        /usr/bin/monero-wallet-cli \
         --wallet-file=MoneroWallet \
         --password $password \
         --daemon-host $daemon_host \

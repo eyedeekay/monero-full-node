@@ -32,7 +32,7 @@ wallet-clean:
 	docker rm -f monero-wallet; true
 
 wallet-run:
-	docker run -d --rm \
+	docker run -d \
 		--cap-drop all \
 		--env="daemon_host=$(daemon_host)" \
 		--env="daemon_port=$(daemon_port)" \
