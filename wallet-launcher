@@ -9,7 +9,10 @@ if [ ! -f MoneroWallet ]; then
 else
     /usr/bin/monero-wallet-cli \
         --wallet-file=MoneroWallet \
-        --password $password \
-        --daemon-host $daemon_host \
-        --daemon-port $daemon_port
+        --password=$password \
+        --rpc-bind-ip 0.0.0.0 \
+        --rpc-bind-port 18082 \
+        --daemon-host=$daemon_host \
+        --daemon-port=$daemon_port
 fi
+tail -f monero-wallet-cli.log
