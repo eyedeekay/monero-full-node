@@ -79,7 +79,7 @@ daemon-clean:
 daemon-run:
 	docker run -d --rm \
 		--cap-drop all \
-		-v $(HOME)/blockchain-xmr:/home/monero/.bitmonero \
+		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--network=host \
 		--name=monero-full-node \
 		-td monero-full-node
@@ -90,5 +90,3 @@ clobber-daemon:
 	docker rm -f monero-full-node; \
 	docker rmi -f monero-full-node; \
 	docker system prune -f
-
-
