@@ -27,5 +27,7 @@ WORKDIR /home/xmrwallet/wallet
 
 COPY wallet-launcher /usr/bin/wallet-launcher
 
+EXPOSE 18082
+
 CMD wallet-launcher
 

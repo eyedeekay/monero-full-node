@@ -37,6 +37,7 @@ wallet-run:
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
+		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
 		--interactive=true \
@@ -52,6 +53,8 @@ wallet-list:
 wallet-help:
 	docker exec -ti monero-wallet monero-wallet-cli --help
 
+
+
 wallet-launcher:
 	@echo '#! /usr/bin/env sh' | tee wallet-launcher
 	@echo 'if [ ! -f MoneroWallet ]; then' | tee -a wallet-launcher
@@ -65,6 +68,8 @@ wallet-launcher:
 	@echo '    /usr/bin/monero-wallet-cli \' | tee -a wallet-launcher
 	@echo '        --wallet-file=MoneroWallet \' | tee -a wallet-launcher
 	@echo '        --password=$$password \' | tee -a wallet-launcher
+	@echo '        --rpc-bind-ip 0.0.0.0 \' | tee -a wallet-launcher
+	@echo '        --rpc-bind-port 18082 \' | tee -a wallet-launcher
 	@echo '        --daemon-host=$$daemon_host \' | tee -a wallet-launcher
 	@echo '        --daemon-port=$$daemon_port' | tee -a wallet-launcher
 	@echo 'fi' | tee -a wallet-launcher
