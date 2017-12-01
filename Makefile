@@ -48,21 +48,22 @@ wallet-help:
 	docker exec -ti monero-wallet monero-wallet-cli --help
 
 wallet-launcher:
-	@echo '#! /usr/bin/env sh'
-	@echo 'if [ ! -f MoneroWallet ]; then'
-	@echo '    /usr/bin/monero-wallet-cli \'
-	@echo '        --generate-new-wallet=MoneroWallet \'
-	@echo '        --mnemonic-language=English \'
-	@echo '        --password $$password \'
-	@echo '        --daemon-host=$$daemon_host \'
-	@echo '        --daemon-port=$$daemon_port'
-	@echo 'else'
-	@echo '    /usr/bin/monero-wallet-cli \'
-	@echo '        --wallet-file=MoneroWallet \'
-	@echo '        --password $$password \'
-	@echo '        --daemon-host $$daemon_host \'
-	@echo '        --daemon-port $$daemon_port'
-	@echo 'fi'
+	@echo '#! /usr/bin/env sh' | tee wallet-launcher
+	@echo 'if [ ! -f MoneroWallet ]; then' | tee -a wallet-launcher
+	@echo '    /usr/bin/monero-wallet-cli \' | tee -a wallet-launcher
+	@echo '        --generate-new-wallet=MoneroWallet \' | tee -a wallet-launcher
+	@echo '        --mnemonic-language=English \' | tee -a wallet-launcher
+	@echo '        --password $$password \' | tee -a wallet-launcher
+	@echo '        --daemon-host=$$daemon_host \' | tee -a wallet-launcher
+	@echo '        --daemon-port=$$daemon_port' | tee -a wallet-launcher
+	@echo 'else' | tee -a wallet-launcher
+	@echo '    /usr/bin/monero-wallet-cli \' | tee -a wallet-launcher
+	@echo '        --wallet-file=MoneroWallet \' | tee -a wallet-launcher
+	@echo '        --password $$password \' | tee -a wallet-launcher
+	@echo '        --daemon-host $$daemon_host \' | tee -a wallet-launcher
+	@echo '        --daemon-port $$daemon_port' | tee -a wallet-launcher
+	@echo 'fi' | tee -a wallet-launcher
+	chmod +x wallet-launcher
 
 wallet-address:
 	@echo "Monero Wallet Address" | tee walletaddress.md
