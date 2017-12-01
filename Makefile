@@ -17,6 +17,9 @@ build: daemon wallet
 
 clobber: clobber-wallet clobber-server
 
+update:
+	git stash; git pull --force
+
 wallet: password
 	docker build --force-rm \
 		--build-arg="daemon_host=$(daemon_host)" \
@@ -81,7 +84,7 @@ daemon-run:
 		--name=monero-full-node \
 		-td monero-full-node
 
-wallet-update: update daemon daemon-clean daemon-run
+daemon-update: update daemon daemon-clean daemon-run
 
 clobber-daemon:
 	docker rm -f monero-full-node; \
