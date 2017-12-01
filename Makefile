@@ -29,7 +29,7 @@ wallet: password
 		-t monero-wallet . | tee wallet-info.log
 
 wallet-clean:
-	docker rm -f monero-wallet
+	docker rm -f monero-wallet; true
 
 wallet-run:
 	docker run -d --rm \
@@ -74,7 +74,7 @@ daemon:
 	docker build --force-rm -f Dockerfile.server -t monero-full-node . | tee server-info.log
 
 daemon-clean:
-	docker rm -f monero-full-node
+	docker rm -f monero-full-node; true
 
 daemon-run:
 	docker run -d --rm \
