@@ -53,7 +53,26 @@ wallet-list:
 wallet-help:
 	docker exec -ti monero-wallet monero-wallet-cli --help
 
+wallet-balance:
+	docker exec -ti monero-wallet monero-wallet-cli --password "$(password)" \
+		--wallet-file MoneroWallet \
+		--daemon-host "$(daemon_host)" \
+		--daemon-port "$(daemon_port)" \
+		--command balance | tail -n 2
 
+wallet-xfers:
+	docker exec -ti monero-wallet monero-wallet-cli --password "$(password)" \
+		--wallet-file MoneroWallet \
+		--daemon-host "$(daemon_host)" \
+		--daemon-port "$(daemon_port)" \
+		--command show_transfers pool
+
+wallet-send:
+	docker exec -ti monero-wallet monero-wallet-cli --password "$(password)" \
+		--wallet-file MoneroWallet \
+		--daemon-host "$(daemon_host)" \
+		--daemon-port "$(daemon_port)" \
+		--command transfer "$(recipient_address)" "$(send_amount)"
 
 wallet-launcher:
 	@echo '#! /usr/bin/env sh' | tee wallet-launcher
