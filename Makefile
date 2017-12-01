@@ -15,7 +15,7 @@ pw: clean password
 
 build: daemon wallet
 
-clobber: clobber-wallet clobber-server
+clobber: clobber-wallet clobber-daemon
 
 update:
 	git stash; git pull --force
