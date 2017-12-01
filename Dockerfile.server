@@ -1,0 +1,30 @@
+# Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/monero/.bitmonero --network=host --name=monerod -td monero-full-node
+FROM debian:sid
+
+RUN apt-get update
+RUN apt-get install -y curl bzip2 paxctl wget
+
+RUN adduser --disabled-password --gecos '' q--home /home/monero monero
+RUN chown -R monero:monero /home/monero
+WORKDIR /home/monero
+
+RUN wget https://downloads.getmonero.org/linux64 && \
+        echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
+        tar jxvf linux64 && \
+        rm linux64 && \
+
+RUN cp ./monero*/monerod /usr/bin/ &&\
+  rm -r monero*/
+
+RUN paxctl -Ccm /usr/bin/monerod; true
+
+USER monero
+
+# blockchain loaction
+VOLUME /home/monero/.bitmonero
+
+EXPOSE 18080 18081
+
+RUN monerod --help
+
+CMD /usr/bin/monerod --restricted-rpc --rpc-bind-ip=0.0.0.0 --confirm-external-bind

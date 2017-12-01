@@ -1,7 +1,8 @@
 # Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/monero/.bitmonero --network=host --name=monerod -td monero-full-node
-FROM ubuntu:latest
+FROM debian:sid
 
-RUN apt-get update && apt-get install -y curl bzip2 paxctl wget
+RUN apt-get update
+RUN apt-get install -y curl bzip2 paxctl wget
 
 RUN adduser --disabled-password --gecos '' q--home /home/monero monero
 RUN chown -R monero:monero /home/monero

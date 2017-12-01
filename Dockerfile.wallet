@@ -1,12 +1,13 @@
 # Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/monero/.bitmonero --network=host --name=monerod -td monero-full-node
-FROM ubuntu:latest
-ENV password
-ARG password
+FROM debian:sid
+ENV daemon_host=127.0.0.1 daemon_port=18081 password=""
+ARG password=""
+ARG daemon_host=127.0.0.1
+ARG daemon_port=18081
 RUN apt-get update && apt-get install -y wget bzip2 paxctl file
-RUN adduser --disabled-password --gecos '' --home /home/moneroclient moneroclient
-RUN chown -R moneroclient:moneroclient /home/moneroclient
+RUN adduser --disabled-password --gecos '' --home /home/xmrwallet xmrwallet
 
-WORKDIR /home/moneroclient
+WORKDIR /home/xmrwallet
 
 RUN wget https://downloads.getmonero.org/linux64 && \
         echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
@@ -16,21 +17,24 @@ RUN wget https://downloads.getmonero.org/linux64 && \
 
 RUN mv -v monero*/* /usr/bin/
 
-WORKDIR /home/moneroclient/wallet
+RUN chown -R xmrwallet:xmrwallet /home/xmrwallet/wallet
 
-USER moneroclient
+WORKDIR /home/xmrwallet/wallet
+
+USER xmrwallet
 
 RUN monero-wallet-cli \
-        --daemon-host 192.168.1.98 \
-        --daemon-port 18081 \
-        --password '' \
         --generate-new-wallet=MoneroWallet \
-        --mnemonic-language=English
+        --password=$password \
+        --mnemonic-language=English \
+        --daemon-host=$daemon_host \
+        --daemon-port=$daemon_port
 
 RUN ls
 
-CMD monero-wallet-cli --wallet-file MoneroWallet \
-        --password ''
-        --daemon-host 192.168.1.98 \
-        --daemon-port 18081
+CMD monero-wallet-cli \
+        --wallet-file=MoneroWallet \
+        --password $password \
+        --daemon-host $daemon_host \
+        --daemon-port $daemon_port
 
