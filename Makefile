@@ -22,9 +22,6 @@ update:
 
 wallet: password
 	docker build --force-rm \
-		--build-arg="daemon_host=$(daemon_host)" \
-		--build-arg="daemon_port=$(daemon_port)" \
-		--build-arg="password=$(password)" \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 

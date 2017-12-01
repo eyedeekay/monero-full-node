@@ -14,29 +14,25 @@ RUN wget https://downloads.getmonero.org/linux64 && \
         echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
         tar jxvf linux64 && \
         rm linux64 && \
-        mkdir wallet wallet.bak
+        mkdir wallet
 
 RUN mv -v monero*/* /usr/bin/
 
 RUN chown -R xmrwallet:xmrwallet \
         /home/xmrwallet/wallet \
-        /home/xmrwallet/wallet.bak
-
-WORKDIR /home/xmrwallet/wallet.bak
 
 USER xmrwallet
-
-RUN monero-wallet-cli \
-        --generate-new-wallet=MoneroWallet \
-        --mnemonic-language=English \
-        --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port
 
 RUN ls
 
 WORKDIR /home/xmrwallet/wallet
 
-CMD cp ../wallet.bak/* . && \
+CMD monero-wallet-cli \
+        --generate-new-wallet=MoneroWallet \
+        --mnemonic-language=English \
+        --password $password \
+        --daemon-host=$daemon_host \
+        --daemon-port=$daemon_port && \
         /usr/bin/monero-wallet-cli \
         --wallet-file=MoneroWallet \
         --password $password \
