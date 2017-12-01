@@ -66,12 +66,10 @@ clobber-wallet:
 	docker rmi -f monero-wallet; \
 	docker system prune -f
 
-
-daemon-old:
-	docker build --force-rm -t monero-full-node . | tee server-info.log
-
 daemon:
-	docker build --force-rm -f Dockerfile.server -t monero-full-node . | tee server-info.log
+	docker build --force-rm \
+		-f Dockerfile.server \
+		-t monero-full-node . | tee server-info.log
 
 daemon-clean:
 	docker rm -f monero-full-node; true
