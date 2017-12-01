@@ -77,7 +77,7 @@ wallet-address:
 	@echo "" | tee -a walletaddress.md
 	@echo -n "  XMR:" | tee -a walletaddress.md
 	docker exec -ti monero-wallet monero-wallet-cli --password "$(password)" \
-		--wallet-file newMoneroWallet \
+		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
 		--command address | tail -n 1 | tee -a walletaddress.md
