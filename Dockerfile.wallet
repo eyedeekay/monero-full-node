@@ -18,7 +18,9 @@ RUN wget https://downloads.getmonero.org/linux64 && \
 
 RUN mv -v monero*/* /usr/bin/
 
-RUN chown -R xmrwallet:xmrwallet /home/xmrwallet/wallet
+RUN chown -R xmrwallet:xmrwallet \
+        /home/xmrwallet/wallet \
+        /home/xmrwallet/wallet.bak
 
 WORKDIR /home/xmrwallet/wallet.bak
 
