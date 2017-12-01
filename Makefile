@@ -29,17 +29,22 @@ wallet-clean:
 	docker rm -f monero-wallet; true
 
 wallet-run:
-	docker run -d \
+	mkdir -p $(HOME)/Monero
+	chown $(USER):docker $(HOME)/Monero
+	chmod g+w $(HOME)/Monero
+	docker run -d --rm \
 		--cap-drop all \
-		--env="daemon_host=$(daemon_host)" \
-		--env="daemon_port=$(daemon_port)" \
-		--env="password=$(password)" \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
 		--interactive=true \
 		-t monero-wallet
 
-wallet-update: update wallet wallet-clean wallet-run
+wallet-update: update wallet-reboot
+
+wallet-reboot: wallet wallet-clean wallet-run
 
 wallet-list:
 	docker exec -ti monero-wallet ls
@@ -53,16 +58,17 @@ wallet-launcher:
 	@echo '    /usr/bin/monero-wallet-cli \' | tee -a wallet-launcher
 	@echo '        --generate-new-wallet=MoneroWallet \' | tee -a wallet-launcher
 	@echo '        --mnemonic-language=English \' | tee -a wallet-launcher
-	@echo '        --password $$password \' | tee -a wallet-launcher
+	@echo '        --password=$$password \' | tee -a wallet-launcher
 	@echo '        --daemon-host=$$daemon_host \' | tee -a wallet-launcher
 	@echo '        --daemon-port=$$daemon_port' | tee -a wallet-launcher
 	@echo 'else' | tee -a wallet-launcher
 	@echo '    /usr/bin/monero-wallet-cli \' | tee -a wallet-launcher
 	@echo '        --wallet-file=MoneroWallet \' | tee -a wallet-launcher
-	@echo '        --password $$password \' | tee -a wallet-launcher
-	@echo '        --daemon-host $$daemon_host \' | tee -a wallet-launcher
-	@echo '        --daemon-port $$daemon_port' | tee -a wallet-launcher
+	@echo '        --password=$$password \' | tee -a wallet-launcher
+	@echo '        --daemon-host=$$daemon_host \' | tee -a wallet-launcher
+	@echo '        --daemon-port=$$daemon_port' | tee -a wallet-launcher
 	@echo 'fi' | tee -a wallet-launcher
+	@echo 'tail -f monero-wallet-cli.log' | tee -a wallet-launcher
 	chmod +x wallet-launcher
 
 wallet-address:
@@ -97,7 +103,9 @@ daemon-run:
 		--name=monero-full-node \
 		-td monero-full-node
 
-daemon-update: update daemon daemon-clean daemon-run
+daemon-update: update daemon-reboot
+
+daemon-reboot: daemon daemon-clean daemon-run
 
 clobber-daemon:
 	docker rm -f monero-full-node; \

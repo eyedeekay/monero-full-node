@@ -23,8 +23,6 @@ RUN chown -R xmrwallet:xmrwallet \
 
 USER xmrwallet
 
-RUN ls
-
 WORKDIR /home/xmrwallet/wallet
 
 COPY wallet-launcher /usr/bin/wallet-launcher

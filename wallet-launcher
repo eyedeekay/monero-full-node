@@ -3,7 +3,7 @@ if [ ! -f MoneroWallet ]; then
     /usr/bin/monero-wallet-cli \
         --generate-new-wallet=MoneroWallet \
         --mnemonic-language=English \
-        --password $password \
+        --password=$password \
         --daemon-host=$daemon_host \
         --daemon-port=$daemon_port
 else
