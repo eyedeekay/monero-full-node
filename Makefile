@@ -47,6 +47,23 @@ wallet-list:
 wallet-help:
 	docker exec -ti monero-wallet monero-wallet-cli --help
 
+wallet-launcher:
+	@echo '#! /usr/bin/env sh'
+	@echo 'if [ ! -f MoneroWallet ]; then'
+	@echo '    /usr/bin/monero-wallet-cli \'
+	@echo '        --generate-new-wallet=MoneroWallet \'
+	@echo '        --mnemonic-language=English \'
+	@echo '        --password $$password \'
+	@echo '        --daemon-host=$$daemon_host \'
+	@echo '        --daemon-port=$$daemon_port'
+	@echo 'else'
+	@echo '    /usr/bin/monero-wallet-cli \'
+	@echo '        --wallet-file=MoneroWallet \'
+	@echo '        --password $$password \'
+	@echo '        --daemon-host $$daemon_host \'
+	@echo '        --daemon-port $$daemon_port'
+	@echo 'fi'
+
 wallet-address:
 	@echo "Monero Wallet Address" | tee walletaddress.md
 	@echo "=====================" | tee -a walletaddress.md

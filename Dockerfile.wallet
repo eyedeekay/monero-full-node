@@ -27,15 +27,7 @@ RUN ls
 
 WORKDIR /home/xmrwallet/wallet
 
-CMD monero-wallet-cli \
-        --generate-new-wallet=MoneroWallet \
-        --mnemonic-language=English \
-        --password $password \
-        --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port && \
-        /usr/bin/monero-wallet-cli \
-        --wallet-file=MoneroWallet \
-        --password $password \
-        --daemon-host $daemon_host \
-        --daemon-port $daemon_port
+COPY wallet-launcher /usr/bin/wallet-launcher
+
+CMD wallet-launcher
 
