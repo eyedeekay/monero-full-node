@@ -1,9 +1,9 @@
 # Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/xmrdaemon/.bitmonero --network=host --name=monerod -td monero-full-node
 FROM debian:sid
-ENV daemon_host=127.0.0.1 daemon_port=18081 password=""
 ARG password=""
 ARG daemon_host=127.0.0.1
 ARG daemon_port=18081
+ENV daemon_host=127.0.0.1 daemon_port=18081 password=""
 RUN apt-get update
 RUN apt-get install -y bzip2 paxctl wget
 RUN adduser --disabled-password --gecos '' --home /home/xmrdaemon xmrdaemon
@@ -13,7 +13,7 @@ WORKDIR /home/xmrdaemon
 RUN wget https://downloads.getmonero.org/linux64 && \
         echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
         tar jxvf linux64 && \
-        rm linux64 && \
+        rm linux64
 
 RUN mv -v ./monero*/* /usr/bin/
 
