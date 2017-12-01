@@ -25,7 +25,6 @@ USER xmrwallet
 
 RUN monero-wallet-cli \
         --generate-new-wallet=MoneroWallet \
-        --password=$password \
         --mnemonic-language=English \
         --daemon-host=$daemon_host \
         --daemon-port=$daemon_port

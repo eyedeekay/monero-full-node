@@ -13,22 +13,24 @@ clean:
 
 pw: clean password
 
+build: daemon wallet
+
 clobber: clobber-wallet clobber-server
 
 wallet: password
 	docker build --force-rm \
-		--build-arg "daemon_host=$(daemon_host)" \
-		--build-arg "daemon_port=$(daemon_port)" \
-		--build-arg "password=$(password)" \
+		--build-arg="daemon_host=$(daemon_host)" \
+		--build-arg="daemon_port=$(daemon_port)" \
+		--build-arg="password=$(password)" \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 
 wallet-run:
 	docker run --rm \
 		--cap-drop all \
-		-e "daemon_host=$(daemon_host)" \
-		-e "daemon_port=$(daemon_port)" \
-		-e "password=$(password)" \
+		--env="daemon_host=$(daemon_host)" \
+		--env="daemon_port=$(daemon_port)" \
+		--env="password=$(password)" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
 		--interactive=true \
@@ -57,9 +59,11 @@ clobber-wallet:
 	docker system prune -f
 
 
-daemon:
+daemon-old:
 	docker build --force-rm -t monero-full-node . | tee server-info.log
 
+daemon:
+	docker build --force-rm -f Dockerfile.server -t monero-full-node . | tee server-info.log
 
 daemon-run:
 	docker run -d --rm \
@@ -69,8 +73,9 @@ daemon-run:
 		--name=monerod \
 		-td monero-full-node
 
-clobber-server:
+clobber-daemon:
 	docker rm -f monero-full-node; \
 	docker rmi -f monero-full-node; \
 	docker system prune -f
+
 
