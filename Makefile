@@ -197,6 +197,8 @@ daemon-run: daemon-clean network
 		--hostname=monero-full-node \
 		--name=monero-full-node \
 		--cap-drop all \
+		-p 128.0.0.1:18081:18081 \
+		-p 128.0.0.1:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--network=monero \
 		--name=monero-full-node \
@@ -210,6 +212,8 @@ daemon-run-gui: daemon-clean network
 		--hostname=monero-full-node \
 		--name=monero-full-node \
 		--cap-drop all \
+		-p 128.0.0.1:18081:18081 \
+		-p 128.0.0.1:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--network=monero \
 		--name=monero-full-node \

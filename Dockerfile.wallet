@@ -33,5 +33,10 @@ COPY wallet-launcher /usr/bin/wallet-launcher
 
 EXPOSE 18082
 
-CMD bash -c
+CMD [ -f MoneroWallet ] || /usr/bin/monero-wallet-$iface \
+        --generate-new-wallet=MoneroWallet \
+        --mnemonic-language=English \
+        --password=$password \
+        --daemon-host=$daemon_host \
+        --daemon-port=$daemon_port; bash -c
 
