@@ -35,7 +35,7 @@ wallet-run:
 	mkdir -p $(HOME)/Monero
 	sudo chown $(USER):docker $(HOME)/Monero
 	sudo chmod g+w $(HOME)/Monero
-	docker run -d --rm \
+	docker run --rm \
 		--network=host \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
