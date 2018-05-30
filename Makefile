@@ -36,6 +36,7 @@ wallet-run:
 	sudo chown $(USER):docker $(HOME)/Monero
 	sudo chmod g+w $(HOME)/Monero
 	docker run -d --rm \
+		--network=host \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -52,6 +53,7 @@ wallet-run-gui: wallet-clean
 	sudo chown $(USER):docker $(HOME)/Monero
 	sudo chmod g+w $(HOME)/Monero
 	docker run -d --rm \
+		--network=host \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -70,27 +72,32 @@ wallet-update: update wallet-reboot
 wallet-reboot: wallet wallet-clean wallet-run
 
 wallet-list:
-	docker run --rm -ti monero-wallet ls
+	docker run --network=host \
+		--rm -ti monero-wallet ls
 
 wallet-help:
-	docker run --rm -ti monero-wallet monero-wallet-cli --help
+	docker run --network=host \
+		--rm -ti monero-wallet monero-wallet-cli --help
 
 wallet-balance:
-	docker run --rm -ti --env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
+	docker run --rm -ti --network=host \
+		--env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
 		--command balance | tail -n 2
 
 wallet-xfers:
-	docker run --rm -ti --env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
+	docker run --network=host \
+		--rm -ti --env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
 		--command show_transfers pool
 
 wallet-send:
-	docker run --rm -ti monero-wallet monero-wallet-cli --password "$(password)" \
+	docker run --network=host \
+		--rm -ti monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
