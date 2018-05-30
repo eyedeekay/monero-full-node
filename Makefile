@@ -22,6 +22,8 @@ update:
 
 wallet: password
 	docker build --force-rm \
+		--build-arg "hash"="$(hash)" \
+		--build-arg "iface"="$(iface)" \
 		--no-cache \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
@@ -114,6 +116,8 @@ clobber-wallet:
 
 daemon:
 	docker build --force-rm \
+		--build-arg "hash"="$(hash)" \
+		--build-arg "iface"="$(iface)" \
 		--no-cache \
 		-f Dockerfile.server \
 		-t monero-full-node . | tee server-info.log
@@ -128,6 +132,8 @@ daemon-run:
 		--network=host \
 		--name=monero-full-node \
 		-td monero-full-node
+
+daemon-run-gui:
 
 daemon-update: update daemon-reboot
 

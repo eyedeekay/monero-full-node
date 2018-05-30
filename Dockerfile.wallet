@@ -1,5 +1,7 @@
 # Usage: docker run -d --cap-drop all -v $HOME/blockchain-xmr:/home/monero/.bitmonero --network=host --name=monerod -td monero-full-node
 FROM debian:sid
+ARG hash
+ARG iface
 ARG password
 ARG daemon_host
 ARG daemon_port
@@ -10,8 +12,8 @@ RUN adduser --disabled-password --gecos '' --home /home/xmrwallet xmrwallet
 
 WORKDIR /home/xmrwallet
 
-RUN wget https://downloads.getmonero.org/gui/linux64 && \
-        echo 'fb0f43387b31202f381c918660d9bc32a3d28a4733d391b1625a0e15737c5388 linux64' | sha256sum -c - && \
+RUN wget https://downloads.getmonero.org/$iface/linux64 && \
+        echo "$hash linux64" | sha256sum -c - && \
         tar jxvf linux64 && \
         rm linux64 && \
         mkdir wallet
