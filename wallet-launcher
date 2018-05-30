@@ -5,7 +5,8 @@ if [ ! -f MoneroWallet ]; then
         --mnemonic-language=English \
         --password=$password \
         --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port
+        --daemon-port=$daemon_port \
+        $@
 else
     /usr/bin/monero-wallet-$iface \
         --wallet-file=MoneroWallet \
@@ -13,6 +14,7 @@ else
         --rpc-bind-ip 0.0.0.0 \
         --rpc-bind-port 18082 \
         --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port
+        --daemon-port=$daemon_port \
+        $@
 fi
 tail -f monero-wallet-cli.log
