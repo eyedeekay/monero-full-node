@@ -78,7 +78,7 @@ wallet-reboot: wallet wallet-clean wallet-run
 
 wallet-list: network
 	docker run --network=monero \
-		--rm -ti monero-wallet ls
+		--rm -ti monero-wallet ls -lahR /home/xmrwallet
 
 wallet-help: network
 	docker run --network=monero \

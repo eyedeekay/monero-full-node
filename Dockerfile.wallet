@@ -31,5 +31,5 @@ COPY wallet-launcher /usr/bin/wallet-launcher
 
 EXPOSE 18082
 
-CMD wallet-launcher
+CMD bash -c
 
