@@ -46,6 +46,8 @@ wallet-run:
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
 		--interactive=true \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		-e DISPLAY=$(DISPLAY) \
 		-t monero-wallet
 
 wallet-run-gui: wallet-clean
