@@ -24,7 +24,6 @@ wallet: password
 	docker build --force-rm \
 		--build-arg "hash"="$(hash)" \
 		--build-arg "iface"="$(iface)" \
-		--no-cache \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 
@@ -90,6 +89,7 @@ wallet-balance:
 		--command balance | tail -n 2
 
 wallet-xfers:
+
 	docker run --network=host \
 		--rm -ti --env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
@@ -146,7 +146,6 @@ daemon:
 	docker build --force-rm \
 		--build-arg "hash"="$(hash)" \
 		--build-arg "iface"="$(iface)" \
-		--no-cache \
 		-f Dockerfile.server \
 		-t monero-full-node . | tee server-info.log
 
