@@ -33,8 +33,8 @@ wallet-clean:
 
 wallet-run:
 	mkdir -p $(HOME)/Monero
-	chown $(USER):docker $(HOME)/Monero
-	chmod g+w $(HOME)/Monero
+	sudo chown $(USER):docker $(HOME)/Monero
+	sudo chmod g+w $(HOME)/Monero
 	docker run -d --rm \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
@@ -44,6 +44,23 @@ wallet-run:
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
 		--interactive=true \
+		-t monero-wallet
+
+wallet-run-gui:
+	mkdir -p $(HOME)/Monero
+	sudo chown $(USER):docker $(HOME)/Monero
+	sudo chmod g+w $(HOME)/Monero
+	docker run -d --rm \
+		--cap-drop all \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		-p 127.0.0.1:18082:18082 \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		--name=monero-wallet \
+		--interactive=true \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		-e DISPLAY=$(DISPLAY) \
 		-t monero-wallet
 
 wallet-update: update wallet-reboot
@@ -134,6 +151,14 @@ daemon-run:
 		-td monero-full-node
 
 daemon-run-gui:
+	docker run -d --rm \
+		--cap-drop all \
+		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
+		--network=host \
+		--name=monero-full-node \
+		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
+		-e DISPLAY=$(DISPLAY) \
+		-td monero-full-node
 
 daemon-update: update daemon-reboot
 

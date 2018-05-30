@@ -4,7 +4,7 @@ ARG hash
 ARG iface
 ARG daemon_host
 ARG daemon_port
-ENV daemon_host=127.0.0.1 daemon_port=18081
+ENV daemon_host=127.0.0.1 daemon_port=18081 iface="gui"
 RUN apt-get update
 RUN apt-get install -y bzip2 wget
 RUN adduser --disabled-password --gecos '' --home /home/xmrdaemon xmrdaemon
