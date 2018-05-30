@@ -10,7 +10,7 @@ RUN adduser --disabled-password --gecos '' --home /home/xmrwallet xmrwallet
 
 WORKDIR /home/xmrwallet
 
-RUN wget https://downloads.getmonero.org/linux64 && \
+RUN wget https://downloads.getmonero.org/gui/linux64 && \
         echo 'fb0f43387b31202f381c918660d9bc32a3d28a4733d391b1625a0e15737c5388 linux64' | sha256sum -c - && \
         tar jxvf linux64 && \
         rm linux64 && \
