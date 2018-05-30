@@ -18,7 +18,9 @@ RUN wget https://downloads.getmonero.org/$iface/linux64 && \
         rm linux64 && \
         mkdir wallet
 
+RUN chmod a+x monero/*
 RUN mv -v monero*/* /usr/bin/
+
 
 RUN chown -R xmrwallet:xmrwallet \
         /home/xmrwallet/wallet
