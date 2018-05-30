@@ -142,12 +142,13 @@ daemon:
 daemon-clean:
 	docker rm -f monero-full-node; true
 
-daemon-run:
-	docker run -d --rm \
+daemon-run: daemon-clean
+	docker run -d \
 		--cap-drop all \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--network=host \
 		--name=monero-full-node \
+		--restart always \
 		-td monero-full-node
 
 daemon-run-gui:
