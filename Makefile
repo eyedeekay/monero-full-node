@@ -40,6 +40,7 @@ wallet-run:
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
+		--env=iface="$(iface)" \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
@@ -55,6 +56,7 @@ wallet-run-gui:
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
+		--env=iface=gui \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
