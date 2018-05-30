@@ -30,12 +30,14 @@ wallet: password
 wallet-clean:
 	docker rm -f monero-wallet; true
 
-wallet-run:
+wallet-run: network
 	mkdir -p $(HOME)/Monero
 	sudo chown $(USER):docker $(HOME)/Monero
 	sudo chmod g+w $(HOME)/Monero
 	docker run --rm \
-		--network=host \
+		--network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -49,12 +51,14 @@ wallet-run:
 		-e DISPLAY=$(DISPLAY) \
 		-t monero-wallet
 
-wallet-run-gui: wallet-clean
+wallet-run-gui: wallet-clean network
 	mkdir -p $(HOME)/Monero
 	sudo chown $(USER):docker $(HOME)/Monero
 	sudo chmod g+w $(HOME)/Monero
 	docker run -d --rm \
-		--network=host \
+		--network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -72,34 +76,68 @@ wallet-update: update wallet-reboot
 
 wallet-reboot: wallet wallet-clean wallet-run
 
-wallet-list:
-	docker run --network=host \
+wallet-list: network
+	docker run --network=monero \
 		--rm -ti monero-wallet ls
 
-wallet-help:
-	docker run --network=host \
+wallet-help: network
+	docker run --network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
+		--name=monero-wallet \
+		--interactive=true \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		--env=iface=cli \
 		--rm -ti monero-wallet monero-wallet-cli --help
 
-wallet-balance:
-	docker run --rm -ti --network=host \
-		--env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
+wallet-balance: network
+	docker run --rm -ti --network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
+		--name=monero-wallet \
+		--interactive=true \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		--env=iface=cli \
+		monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
 		--command balance | tail -n 2
 
-wallet-xfers:
-
-	docker run --network=host \
-		--rm -ti --env iface=cli monero-wallet monero-wallet-cli --password "$(password)" \
+wallet-xfers: network
+	docker run --network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
+		--name=monero-wallet \
+		--link monero-full-node \
+		--interactive=true \
+		--rm -ti \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		--env=iface=cli \
+		monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
 		--command show_transfers pool
 
-wallet-send:
-	docker run --network=host \
-		--rm -ti monero-wallet monero-wallet-cli --password "$(password)" \
+wallet-send: network
+	docker run --network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
+		--name=monero-wallet \
+		--interactive=true \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		--env=iface=cli \
+		--rm -ti \
+		monero-wallet monero-wallet-cli --password "$(password)" \
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
@@ -152,20 +190,28 @@ daemon:
 daemon-clean:
 	docker rm -f monero-full-node; true
 
-daemon-run: daemon-clean
+daemon-run: daemon-clean network
 	docker run -d \
+		--network=monero \
+		--network-alias=monero-full-node \
+		--hostname=monero-full-node \
+		--name=monero-full-node \
 		--cap-drop all \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
-		--network=host \
+		--network=monero \
 		--name=monero-full-node \
 		--restart always \
 		-td monero-full-node
 
-daemon-run-gui:
+daemon-run-gui: daemon-clean network
 	docker run -d --rm \
+		--network=monero \
+		--network-alias=monero-full-node \
+		--hostname=monero-full-node \
+		--name=monero-full-node \
 		--cap-drop all \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
-		--network=host \
+		--network=monero \
 		--name=monero-full-node \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
