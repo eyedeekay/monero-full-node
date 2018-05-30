@@ -10,7 +10,7 @@ RUN adduser --disabled-password --gecos '' --home /home/xmrdaemon xmrdaemon
 WORKDIR /home/xmrdaemon
 
 RUN wget https://downloads.getmonero.org/linux64 && \
-        echo '6581506f8a030d8d50b38744ba7144f2765c9028d18d990beb316e13655ab248 linux64' | sha256sum -c - && \
+        echo 'fb0f43387b31202f381c918660d9bc32a3d28a4733d391b1625a0e15737c5388 linux64' | sha256sum -c - && \
         tar jxvf linux64 && \
         rm linux64
 
