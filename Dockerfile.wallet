@@ -5,7 +5,7 @@ ARG iface
 ARG password
 ARG daemon_host
 ARG daemon_port
-ENV daemon_host=127.0.0.1 daemon_port=18081 password="" iface="gui" password=$password iface=iface
+ENV daemon_host=127.0.0.1 daemon_port=18081 password="" iface="gui" password=$password iface=$iface
 RUN apt-get update
 RUN apt-get install -y wget bzip2
 RUN adduser --disabled-password --gecos '' --home /home/xmrwallet xmrwallet
