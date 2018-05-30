@@ -16,6 +16,7 @@ RUN wget https://downloads.getmonero.org/$iface/linux64 && \
         tar jxvf linux64 && \
         rm linux64
 
+RUN chmod a+x monero/*
 RUN mv -v ./monero*/* /usr/bin/
 
 RUN chown -R xmrdaemon:xmrdaemon /home/xmrdaemon
