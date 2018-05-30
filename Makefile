@@ -22,6 +22,7 @@ update:
 
 wallet: password
 	docker build --force-rm \
+		--no-cache \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 
@@ -113,6 +114,7 @@ clobber-wallet:
 
 daemon:
 	docker build --force-rm \
+		--no-cache \
 		-f Dockerfile.server \
 		-t monero-full-node . | tee server-info.log
 
