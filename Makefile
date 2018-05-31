@@ -222,7 +222,7 @@ clobber-daemon:
 i2pd:
 	docker build --force-rm -f Dockerfile.i2pd -t eyedeekay/monerohost-i2p .
 
-run-i2pd:
+i2pd-run: network
 	docker run \
 		-d \
 		--name monero-host \
