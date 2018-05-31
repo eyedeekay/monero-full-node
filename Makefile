@@ -13,7 +13,7 @@ clean:
 
 pw: clean password
 
-build: daemon wallet
+build: daemon wallet i2pd
 
 clobber: clobber-wallet clobber-daemon
 
@@ -202,6 +202,7 @@ daemon-run: daemon-clean network
 		--network-alias monero-full-node \
 		--hostname monero-full-node \
 		--name monero-full-node \
+		--link monero-host \
 		-p 0.0.0.0:18081:18081 \
 		-p 0.0.0.0:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
@@ -216,3 +217,21 @@ clobber-daemon:
 	docker rm -f monero-full-node; \
 	docker rmi -f monero-full-node; \
 	docker system prune -f
+
+
+i2pd:
+	docker build --force-rm -f Dockerfile.i2pd -t eyedeekay/monerohost-i2p .
+
+run-i2pd:
+	docker run \
+		-d \
+		--name monero-host \
+		--network monero \
+		--network-alias monero-host \
+		--hostname monero-host \
+		--link monero-full-node \
+		--restart always \
+		-p :4567 \
+		-p 127.0.0.1:7075:7075 \
+		-v $(HOME)/i2pd_dat:/var/lib/i2pd:rw \
+		-t eyedeekay/monerohost-i2p; true

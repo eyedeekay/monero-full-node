@@ -2,3 +2,6 @@
 *log*
 password.mk
 password
+Dockerfile.i2pd
+Dockerfile.monitor
+etc/
