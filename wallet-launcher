@@ -1,20 +1,21 @@
 #! /usr/bin/env sh
+echo "$password"
 if [ ! -f MoneroWallet ]; then
     /usr/bin/monero-wallet-cli \
         --generate-new-wallet=MoneroWallet \
         --mnemonic-language=English \
-        --password=$password \
-        --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port \
+        --password="$password" \
+        --daemon-host="$daemon_host" \
+        --daemon-port="$daemon_port" \
         $@
 else
     /usr/bin/monero-wallet-$iface \
         --wallet-file=MoneroWallet \
-        --password=$password \
         --rpc-bind-ip 0.0.0.0 \
         --rpc-bind-port 18082 \
-        --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port \
+        --password="$password" \
+        --daemon-host="$daemon_host" \
+        --daemon-port="$daemon_port" \
         $@
 fi
 tail -f monero-wallet-cli.log
