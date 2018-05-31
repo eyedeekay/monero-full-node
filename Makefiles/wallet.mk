@@ -22,6 +22,7 @@ wallet-run: network
 		-e iface="$(iface)" \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		--name monero-wallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -40,6 +41,7 @@ wallet-run-gui: wallet-clean network
 		-e iface=gui \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		--name monero-wallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -71,6 +73,7 @@ wallet-help: network
 		-e iface=cli \
 		-e cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		--rm -ti monero-wallet
 
 wallet-balance: network
@@ -86,6 +89,7 @@ wallet-balance: network
 		-e iface=cli \
 		-e cmd_args="--command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		monero-wallet
 
 wallet-xfers: network
@@ -102,6 +106,7 @@ wallet-xfers: network
 		-e iface=cli \
 		-e cmd_args="--command show_transfers pool" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		monero-wallet
 
 wallet-send: network
@@ -117,6 +122,7 @@ wallet-send: network
 		-e cmd_args="--command transfer "$(recipient_address)" "$(send_amount)""
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		monero-wallet
 
 wallet-address: wallet-clean network
@@ -136,6 +142,7 @@ wallet-address: wallet-clean network
 		-e cmd_args="--command address" \
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
 		monero-wallet
 
 clobber-wallet:
