@@ -21,7 +21,7 @@ i2pwallet-run: network
 		-e password="$(password)" \
 		-e iface="$(iface)" \
 		-p 127.0.0.1:18082:18082 \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name monero-i2pwallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -39,7 +39,7 @@ i2pwallet-run-gui: i2pwallet-clean network
 		-e password="$(password)" \
 		-e iface=gui \
 		-p 127.0.0.1:18082:18082 \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name monero-i2pwallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
@@ -70,7 +70,7 @@ i2pwallet-help: network
 		-e password="$(password)" \
 		-e iface=cli \
 		-e cmd_args="--help" \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--rm -ti monero-i2pwallet
 
 i2pwallet-balance: network
@@ -85,7 +85,7 @@ i2pwallet-balance: network
 		-e password="$(password)" \
 		-e iface=cli \
 		-e cmd_args="--command balance" \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-i2pwallet
 
 i2pwallet-xfers: network
@@ -101,7 +101,7 @@ i2pwallet-xfers: network
 		-e password="$(password)" \
 		-e iface=cli \
 		-e cmd_args="--command show_transfers pool" \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-i2pwallet
 
 i2pwallet-send: network
@@ -116,7 +116,7 @@ i2pwallet-send: network
 		-e iface=cli \
 		-e cmd_args="--command transfer "$(recipient_address)" "$(send_amount)""
 		--rm -ti \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-i2pwallet
 
 i2pwallet-address: i2pwallet-clean network
@@ -135,7 +135,7 @@ i2pwallet-address: i2pwallet-clean network
 		-e iface=cli \
 		-e cmd_args="--command address" \
 		--rm -ti \
-		-v $(HOME)/Monero:/home/xmri2pwallet/i2pwallet \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-i2pwallet
 
 clobber-i2pwallet:
