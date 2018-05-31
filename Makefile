@@ -88,7 +88,7 @@ wallet-help: network
 		--env=iface=cli \
 		--env=cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--rm -ti monero-wallet monero-wallet-cli
+		--rm -ti monero-wallet
 
 wallet-balance: network
 	docker run --rm -ti --network=monero \
