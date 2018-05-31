@@ -34,8 +34,8 @@ wallet-run: network
 	docker run --rm \
 		--network=monero \
 		--network-alias=monero-wallet \
-		--hostname=monero-wallet
-		--link monero-full-node \\
+		--hostname=monero-wallet \
+		--link monero-full-node \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
