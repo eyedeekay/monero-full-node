@@ -34,5 +34,4 @@ wallet-launcher:
 	@echo '        --daemon-host $$daemon_host \' | tee -a wallet-launcher
 	@echo '        --daemon-port $$daemon_port $$cmd_args | tee -a monero-wallet-cli.log' | tee -a wallet-launcher
 	@echo 'fi' | tee -a wallet-launcher
-	@echo 'cat monero-wallet-cli.log' | tee -a wallet-launcher
 	chmod +x wallet-launcher
