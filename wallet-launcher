@@ -1,5 +1,5 @@
 #! /usr/bin/env sh
-echo $password
+echo monero-wallet-cli $password $daemon_host $daemon_port $iface
 if [ ! -f MoneroWallet ]; then
     /home/xmrwallet/monero-v0.12.0.0/monero-wallet-cli \
         --generate-new-wallet MoneroWallet \
