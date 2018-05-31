@@ -24,6 +24,7 @@ wallet: password
 	docker build --force-rm \
 		--build-arg "hash"="$(hash)" \
 		--build-arg "iface"="$(iface)" \
+		--build-arg "password"="$(password)" \
 		-f Dockerfile.wallet \
 		-t monero-wallet . | tee wallet-info.log
 
@@ -99,12 +100,8 @@ wallet-balance: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
-		monero-wallet monero-wallet-cli --password "$(password)" \
-		--wallet-file MoneroWallet \
-		--daemon-host "$(daemon_host)" \
-		--daemon-port "$(daemon_port)" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--command balance | tail -n 2
+		monero-wallet --command balance
 
 wallet-xfers: network
 	docker run --network=monero \
@@ -118,12 +115,8 @@ wallet-xfers: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
-		monero-wallet monero-wallet-cli --password "$(password)" \
-		--wallet-file MoneroWallet \
-		--daemon-host "$(daemon_host)" \
-		--daemon-port "$(daemon_port)" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--command show_transfers pool
+		monero-wallet --command show_transfers pool
 
 wallet-send: network
 	docker run --network=monero \
@@ -136,12 +129,8 @@ wallet-send: network
 		--env=password="$(password)" \
 		--env=iface=cli \
 		--rm -ti \
-		monero-wallet monero-wallet-cli --password "$(password)" \
-		--wallet-file MoneroWallet \
-		--daemon-host "$(daemon_host)" \
-		--daemon-port "$(daemon_port)" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--command transfer "$(recipient_address)" "$(send_amount)"
+		monero-wallet --command transfer "$(recipient_address)" "$(send_amount)"
 
 wallet-launcher:
 	@echo '#! /usr/bin/env sh' | tee wallet-launcher
