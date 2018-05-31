@@ -31,9 +31,6 @@ wallet-clean:
 	docker rm -f monero-wallet; true
 
 wallet-run: network
-	mkdir -p $(HOME)/Monero
-	sudo chown $(USER):docker $(HOME)/Monero
-	sudo chmod g+w $(HOME)/Monero
 	docker run --rm \
 		--network=monero \
 		--network-alias=monero-wallet \
@@ -52,9 +49,6 @@ wallet-run: network
 		-t monero-wallet
 
 wallet-run-gui: wallet-clean network
-	mkdir -p $(HOME)/Monero
-	sudo chown $(USER):docker $(HOME)/Monero
-	sudo chmod g+w $(HOME)/Monero
 	docker run --rm \
 		--network=monero \
 		--network-alias=monero-wallet \
@@ -90,6 +84,7 @@ wallet-help: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--rm -ti monero-wallet monero-wallet-cli --help
 
 wallet-balance: network
@@ -106,6 +101,7 @@ wallet-balance: network
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--command balance | tail -n 2
 
 wallet-xfers: network
@@ -124,6 +120,7 @@ wallet-xfers: network
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--command show_transfers pool
 
 wallet-send: network
@@ -141,6 +138,7 @@ wallet-send: network
 		--wallet-file MoneroWallet \
 		--daemon-host "$(daemon_host)" \
 		--daemon-port "$(daemon_port)" \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--command transfer "$(recipient_address)" "$(send_amount)"
 
 wallet-launcher:

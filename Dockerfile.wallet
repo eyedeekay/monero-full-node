@@ -7,7 +7,7 @@ ARG daemon_host
 ARG daemon_port
 ENV daemon_host=127.0.0.1 daemon_port=18081 password="" iface="gui" password=$password iface=$iface
 RUN apt-get update
-RUN apt-get install -y wget bzip2
+RUN apt-get install -y wget bzip2 sudo
 RUN adduser --disabled-password --gecos '' --home /home/xmrwallet xmrwallet
 
 WORKDIR /home/xmrwallet
@@ -33,13 +33,8 @@ COPY wallet-launcher /usr/bin/wallet-launcher
 
 EXPOSE 18082
 
-RUN if [ -f MoneroWallet ]; then \
-        /usr/bin/monero-wallet-cli \
-            --generate-new-wallet=MoneroWallet \
-            --mnemonic-language=English \
-            --password=$password \
-            --daemon-host=$daemon_host \
-            --daemon-port=$daemon_port \
-    fi
-
-CMD wallet-launcher
+USER root
+CMD  chown -R xmrwallet:xmrwallet \
+        /home/xmrwallet/wallet && \
+    chmod o+wrx /home/xmrwallet/wallet && \
+    sudo -u xmrwallet wallet-launcher
