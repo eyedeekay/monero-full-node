@@ -44,7 +44,7 @@ i2pd-client-run: network i2pd-client
 		-p 0.0.0.0:18080:18080 \
 		-p 0.0.0.0:18081:18081 \
 		-v $(PWD)/i2pd_client_dat:/var/lib/i2pd:rw \
-		-t eyedeekay/monerohost-i2p; true
+		-t eyedeekay/monerohost-i2p-client; true
 
 i2pd-client-clean:
 	docker rm -f monero-host-client; true
