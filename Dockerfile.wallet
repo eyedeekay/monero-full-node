@@ -18,7 +18,7 @@ RUN wget https://downloads.getmonero.org/$iface/linux64 && \
         rm linux64 && \
         mkdir wallet
 
-RUN chmod a+x monero/*
+RUN chmod a+x monero*/monero-wallet-gui monero*/monero-wallet-cli
 RUN mv -v monero*/* /usr/bin/
 
 
