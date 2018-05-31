@@ -33,11 +33,13 @@ COPY wallet-launcher /usr/bin/wallet-launcher
 
 EXPOSE 18082
 
-RUN /usr/bin/monero-wallet-cli \
-        --generate-new-wallet=MoneroWallet \
-        --mnemonic-language=English \
-        --password=$password \
-        --daemon-host=$daemon_host \
-        --daemon-port=$daemon_port
+RUN if [ -f MoneroWallet ]; then \
+        /usr/bin/monero-wallet-cli \
+            --generate-new-wallet=MoneroWallet \
+            --mnemonic-language=English \
+            --password=$password \
+            --daemon-host=$daemon_host \
+            --daemon-port=$daemon_port \
+    fi
 
-CMD [ -f MoneroWallet ] && bash -c
+CMD bash -c
