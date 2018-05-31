@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 echo "$password"
 if [ ! -f MoneroWallet ]; then
-    /home/xmrwallet/monero*/monero-wallet-cli \
+    /home/xmrwallet/monero-v0.12.0.0/monero-wallet-cli \
         --generate-new-wallet MoneroWallet \
         --mnemonic-language English \
         --password "$password" \
@@ -9,7 +9,7 @@ if [ ! -f MoneroWallet ]; then
         --daemon-port "$daemon_port" \
         $@ 2>&1 | tee -a monero-wallet-cli.log
 else
-    /home/xmrwallet/monero*/monero-wallet-$iface \
+    /home/xmrwallet/monero-v0.12.0.0/monero-wallet-$iface \
         --wallet-file MoneroWallet \
         --rpc-bind-ip 0.0.0.0 \
         --rpc-bind-port 18082 \
