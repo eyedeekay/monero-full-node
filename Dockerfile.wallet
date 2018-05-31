@@ -35,4 +35,4 @@ USER root
 CMD  chown -R xmrwallet:xmrwallet \
         /home/xmrwallet/wallet && \
     chmod -R o+wrx /home/xmrwallet/wallet && \
-    sudo -u xmrwallet /usr/bin/wallet-launcher $cmd_args
+    sudo -E -u xmrwallet /usr/bin/wallet-launcher $cmd_args
