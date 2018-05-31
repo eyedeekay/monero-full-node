@@ -1,12 +1,12 @@
 #! /usr/bin/env sh
-echo $password $daemon_host $daemon_port
+echo $password
 if [ ! -f MoneroWallet ]; then
     /home/xmrwallet/monero-v0.12.0.0/monero-wallet-cli \
         --generate-new-wallet MoneroWallet \
         --mnemonic-language English \
         --password $password \
         --daemon-host $daemon_host \
-        --daemon-port $daemon_port $cmd_args | tee -a monero-wallet-generate.log
+        --daemon-port $daemon_port | tee -a monero-wallet-generate.log
 else
     /home/xmrwallet/monero-v0.12.0.0/monero-wallet-$iface \
         --wallet-file MoneroWallet \
