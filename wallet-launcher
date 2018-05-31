@@ -16,4 +16,4 @@ else
         --daemon-host $daemon_host \
         --daemon-port $daemon_port $cmd_args | tee -a monero-wallet-cli.log
 fi
-tail -f monero-wallet-cli.log
+cat monero-wallet-cli.log
