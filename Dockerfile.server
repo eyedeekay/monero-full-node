@@ -16,7 +16,7 @@ RUN wget https://downloads.getmonero.org/$iface/linux64 && \
         tar jxvf linux64 && \
         rm linux64
 
-RUN chmod a+x monero*/monero-wallet-gui monero*/monero-wallet-cli
+RUN chmod a+x monero*/monero-wallet-gui monero*/monero-wallet-cli monero*/monerod
 RUN mv -v ./monero*/* /usr/bin/
 
 RUN chmod a+x /usr/bin/
@@ -29,7 +29,7 @@ VOLUME /home/xmrdaemon/.bitmonero
 
 EXPOSE 18080 18081
 
-CMD /usr/bin/monerod \
+CMD /home/xmrdaemon/monero*/monerod \
         --restricted-rpc \
         --rpc-bind-ip=0.0.0.0 \
         --confirm-external-bind
