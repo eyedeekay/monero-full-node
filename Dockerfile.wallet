@@ -42,4 +42,4 @@ RUN if [ -f MoneroWallet ]; then \
             --daemon-port=$daemon_port \
     fi
 
-CMD bash -c
+CMD wallet-launcher

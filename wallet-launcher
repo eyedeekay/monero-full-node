@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 if [ ! -f MoneroWallet ]; then
-    /usr/bin/monero-wallet-$iface \
+    /usr/bin/monero-wallet-cli \
         --generate-new-wallet=MoneroWallet \
         --mnemonic-language=English \
         --password=$password \
