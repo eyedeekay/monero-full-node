@@ -194,8 +194,8 @@ daemon-run: daemon-clean network
 		--network-alias=monero-full-node \
 		--hostname=monero-full-node \
 		--name=monero-full-node \
-		-p 127.0.0.1:18081:18081 \
-		-p 127.0.0.1:18080:18080 \
+		-p 0.0.0.0:18081:18081 \
+		-p 0.0.0.0:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--restart always \
 		-td monero-full-node
