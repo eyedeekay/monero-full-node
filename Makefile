@@ -142,6 +142,7 @@ wallet-send: network
 
 wallet-launcher:
 	@echo '#! /usr/bin/env sh' | tee wallet-launcher
+	@echo 'echo $password' | tee wallet-launcher
 	@echo 'if [ ! -f MoneroWallet ]; then' | tee -a wallet-launcher
 	@echo '    /home/xmrwallet/monero-v0.12.0.0/monero-wallet-cli \' | tee -a wallet-launcher
 	@echo '        --generate-new-wallet=MoneroWallet \' | tee -a wallet-launcher
