@@ -176,7 +176,7 @@ wallet-address:
 		-e daemon_port="$(daemon_port)" \
 		-e password="$(password)" \
 		-e iface=cli \
-		-e cmd_args="--command address"
+		-e cmd_args="--command address" \
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-wallet
