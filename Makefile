@@ -86,8 +86,9 @@ wallet-help: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
+		--env=cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--rm -ti monero-wallet monero-wallet-cli --help
+		--rm -ti monero-wallet monero-wallet-cli
 
 wallet-balance: network
 	docker run --rm -ti --network=monero \
@@ -100,8 +101,9 @@ wallet-balance: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
+		--env=cmd_args="--command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		monero-wallet --command balance
+		monero-wallet
 
 wallet-xfers: network
 	docker run --network=monero \
@@ -115,8 +117,9 @@ wallet-xfers: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
+		--env=cmd_args="--command show_transfers pool" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		monero-wallet --command show_transfers pool
+		monero-wallet
 
 wallet-send: network
 	docker run --network=monero \
@@ -128,9 +131,10 @@ wallet-send: network
 		--env=daemon_port="$(daemon_port)" \
 		--env=password="$(password)" \
 		--env=iface=cli \
+		--env=cmd_args="--command transfer "$(recipient_address)" "$(send_amount)""
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		monero-wallet --command transfer "$(recipient_address)" "$(send_amount)"
+		monero-wallet
 
 wallet-launcher:
 	@echo '#! /usr/bin/env sh' | tee wallet-launcher

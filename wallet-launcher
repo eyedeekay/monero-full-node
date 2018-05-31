@@ -7,7 +7,7 @@ if [ ! -f MoneroWallet ]; then
         --password "$password" \
         --daemon-host "$daemon_host" \
         --daemon-port "$daemon_port" \
-        $@
+        $@ 2>&1 | tee -a monero-wallet-cli.log
 else
     /usr/bin/monero-wallet-$iface \
         --wallet-file MoneroWallet \
@@ -16,6 +16,6 @@ else
         --password "$password" \
         --daemon-host "$daemon_host" \
         --daemon-port "$daemon_port" \
-        $@
+        $@ 2>&1 | tee -a monero-wallet-cli.log
 fi
-tail -f monero-wallet-cli.log
+
