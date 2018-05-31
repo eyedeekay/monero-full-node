@@ -33,9 +33,9 @@ wallet-clean:
 
 wallet-run: network
 	docker run --rm \
-		--network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
+		--network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
 		--link monero-full-node \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -43,7 +43,7 @@ wallet-run: network
 		-e iface="$(iface)" \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--name=monero-wallet \
+		--name monero-wallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
@@ -51,9 +51,9 @@ wallet-run: network
 
 wallet-run-gui: wallet-clean network
 	docker run --rm \
-		--network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
+		--network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
 		--link monero-full-node \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -61,7 +61,7 @@ wallet-run-gui: wallet-clean network
 		-e iface=gui \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
-		--name=monero-wallet \
+		--name monero-wallet \
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
@@ -72,18 +72,18 @@ wallet-update: update wallet-reboot
 wallet-reboot: wallet wallet-clean wallet-run
 
 wallet-list: network
-	docker run --network=monero \
+	docker run --network monero \
 		--rm -ti monero-wallet ls -lahR /home/xmrwallet
 
 wallet-find: network
-	docker run --network=monero \
+	docker run --network monero \
 		--rm -ti monero-wallet find . -name monero-wallet-cli
 
 wallet-help: network
-	docker run --network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
-		--name=monero-wallet \
+	docker run --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
 		--link monero-full-node \
 		-i \
 		-e daemon_host="$(daemon_host)" \
@@ -95,10 +95,10 @@ wallet-help: network
 		--rm -ti monero-wallet
 
 wallet-balance: network
-	docker run --rm -ti --network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
-		--name=monero-wallet \
+	docker run --rm -ti --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
 		--link monero-full-node \
 		-i \
 		-e daemon_host="$(daemon_host)" \
@@ -110,10 +110,10 @@ wallet-balance: network
 		monero-wallet
 
 wallet-xfers: network
-	docker run --network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
-		--name=monero-wallet \
+	docker run --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
 		--link monero-full-node \
 		-i \
 		--rm -ti \
@@ -126,10 +126,10 @@ wallet-xfers: network
 		monero-wallet
 
 wallet-send: network
-	docker run --network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
-		--name=monero-wallet \
+	docker run --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
 		-i \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -167,10 +167,10 @@ wallet-address:
 	@echo "=====================" | tee -a walletaddress.md
 	@echo "" | tee -a walletaddress.md
 	@echo -n "  XMR:" | tee -a walletaddress.md
-	docker run --network=monero \
-		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
-		--name=monero-wallet \
+	docker run --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
 		-i \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -198,10 +198,10 @@ daemon-clean:
 
 daemon-run: daemon-clean network
 	docker run -d \
-		--network=monero \
-		--network-alias=monero-full-node \
-		--hostname=monero-full-node \
-		--name=monero-full-node \
+		--network monero \
+		--network-alias monero-full-node \
+		--hostname monero-full-node \
+		--name monero-full-node \
 		-p 0.0.0.0:18081:18081 \
 		-p 0.0.0.0:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
