@@ -36,5 +36,5 @@ EXPOSE 18082
 USER root
 CMD  chown -R xmrwallet:xmrwallet \
         /home/xmrwallet/wallet && \
-    chmod o+wrx /home/xmrwallet/wallet && \
+    chmod -R o+wrx /home/xmrwallet/wallet && \
     sudo -u xmrwallet wallet-launcher $cmd_args
