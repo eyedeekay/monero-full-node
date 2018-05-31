@@ -34,7 +34,8 @@ wallet-run: network
 	docker run --rm \
 		--network=monero \
 		--network-alias=monero-wallet \
-		--hostname=monero-wallet \
+		--hostname=monero-wallet
+		--link monero-full-node \\
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -53,6 +54,7 @@ wallet-run-gui: wallet-clean network
 		--network=monero \
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
+		--link monero-full-node \
 		--cap-drop all \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -79,6 +81,7 @@ wallet-help: network
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--name=monero-wallet \
+		--link monero-full-node \
 		--interactive=true \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -92,6 +95,7 @@ wallet-balance: network
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--name=monero-wallet \
+		--link monero-full-node \
 		--interactive=true \
 		--env=daemon_host="$(daemon_host)" \
 		--env=daemon_port="$(daemon_port)" \
@@ -198,8 +202,6 @@ daemon-run: daemon-clean network
 		-p 127.0.0.1:18081:18081 \
 		-p 127.0.0.1:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
-		--network=monero \
-		--name=monero-full-node \
 		--restart always \
 		-td monero-full-node
 
@@ -213,8 +215,6 @@ daemon-run-gui: daemon-clean network
 		-p 127.0.0.1:18081:18081 \
 		-p 127.0.0.1:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
-		--network=monero \
-		--name=monero-full-node \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
 		-td monero-full-node
