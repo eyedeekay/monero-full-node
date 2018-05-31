@@ -149,7 +149,7 @@ wallet-launcher:
 	@echo '        --mnemonic-language English \' | tee -a wallet-launcher
 	@echo '        --password $$password \' | tee -a wallet-launcher
 	@echo '        --daemon-host $$daemon_host \' | tee -a wallet-launcher
-	@echo '        --daemon-port $$daemon_port $$cmd_args | tee -a monero-wallet-generate.log' | tee -a wallet-launcher
+	@echo '        --daemon-port $$daemon_port | tee -a monero-wallet-generate.log' | tee -a wallet-launcher
 	@echo 'else' | tee -a wallet-launcher
 	@echo '    /home/xmrwallet/monero-v0.12.0.0/monero-wallet-$$iface \' | tee -a wallet-launcher
 	@echo '        --wallet-file MoneroWallet \' | tee -a wallet-launcher
