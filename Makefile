@@ -22,6 +22,7 @@ update:
 
 wallet: password
 	docker build --force-rm \
+		--no-cache \
 		--build-arg "hash"="$(hash)" \
 		--build-arg "iface"="$(iface)" \
 		--build-arg "password"="$(password)" \
@@ -167,11 +168,19 @@ wallet-address:
 	@echo "=====================" | tee -a walletaddress.md
 	@echo "" | tee -a walletaddress.md
 	@echo -n "  XMR:" | tee -a walletaddress.md
-	docker exec -ti monero-wallet monero-wallet-cli --password "$(password)" \
-		--wallet-file MoneroWallet \
-		--daemon-host "$(daemon_host)" \
-		--daemon-port "$(daemon_port)" \
-		--command address | tail -n 1 | tee -a walletaddress.md
+	docker run --network=monero \
+		--network-alias=monero-wallet \
+		--hostname=monero-wallet \
+		--name=monero-wallet \
+		--interactive=true \
+		--env=daemon_host="$(daemon_host)" \
+		--env=daemon_port="$(daemon_port)" \
+		--env=password="$(password)" \
+		--env=iface=cli \
+		--env=cmd_args="--command address"
+		--rm -ti \
+		-v $(HOME)/Monero:/home/xmrwallet/wallet \
+		monero-wallet
 
 clobber-wallet:
 	docker rm -f monero-wallet; \
