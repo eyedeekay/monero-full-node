@@ -27,7 +27,7 @@ VOLUME /home/xmrdaemon/.bitmonero
 
 EXPOSE 18080 18081
 
-CMD /home/xmrdaemon/monero*/monerod \
+CMD /home/xmrdaemon/monero-v0.12.0.0/monerod \
         --restricted-rpc \
         --rpc-bind-ip=0.0.0.0 \
         --confirm-external-bind
