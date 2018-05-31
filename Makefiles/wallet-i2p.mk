@@ -84,7 +84,7 @@ i2pwallet-balance: network
 		-e daemon_port="$(daemon_port)" \
 		-e password="$(password)" \
 		-e iface=cli \
-		-e cmd_args="--command balance" \
+		-e cmd_args="--verbose --command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-i2pwallet
 

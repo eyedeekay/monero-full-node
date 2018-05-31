@@ -28,4 +28,4 @@ include Makefiles/wallet.mk
 include Makefiles/wallet-i2p.mk
 include Makefiles/server.mk
 include Makefiles/i2pd.mk
-#include Makefiles/webwallet.mk
+include Makefiles/webwallet.mk

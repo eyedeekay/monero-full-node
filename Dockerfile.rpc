@@ -32,7 +32,6 @@ COPY wallet-launcher /usr/bin/wallet-launcher
 EXPOSE 18082
 
 USER root
-CMD  chown -R xmrwallet:xmrwallet \
-        /home/xmrwallet/ && \
-    chmod -R a+wrx /home/xmrwallet/ && \
-    sudo -E -u xmrwallet /usr/bin/wallet-launcher $cmd_args
+RUN ls ../ -lahR
+RUN /home/xmrwallet/monero-v0.12.0.0/monero-wallet-rpc --help
+CMD /home/xmrwallet/monero-v0.12.0.0/monero-wallet-rpc
