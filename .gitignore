@@ -3,3 +3,5 @@
 password.mk
 password
 Dockerfile.monitor
+i2pd_client
+i2pd_client_dat
