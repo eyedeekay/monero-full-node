@@ -37,14 +37,14 @@ wallet-run: network
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--link monero-full-node \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface="$(iface)" \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface="$(iface)" \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
-		--interactive=true \
+		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
 		-t monero-wallet
@@ -55,14 +55,14 @@ wallet-run-gui: wallet-clean network
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--link monero-full-node \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=gui \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=gui \
 		-p 127.0.0.1:18082:18082 \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--name=monero-wallet \
-		--interactive=true \
+		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
 		-t monero-wallet
@@ -85,12 +85,12 @@ wallet-help: network
 		--hostname=monero-wallet \
 		--name=monero-wallet \
 		--link monero-full-node \
-		--interactive=true \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=cli \
-		--env=cmd_args="--help" \
+		-i \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=cli \
+		-e cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		--rm -ti monero-wallet
 
@@ -100,12 +100,12 @@ wallet-balance: network
 		--hostname=monero-wallet \
 		--name=monero-wallet \
 		--link monero-full-node \
-		--interactive=true \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=cli \
-		--env=cmd_args="--command balance" \
+		-i \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=cli \
+		-e cmd_args="--command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-wallet
 
@@ -115,13 +115,13 @@ wallet-xfers: network
 		--hostname=monero-wallet \
 		--name=monero-wallet \
 		--link monero-full-node \
-		--interactive=true \
+		-i \
 		--rm -ti \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=cli \
-		--env=cmd_args="--command show_transfers pool" \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=cli \
+		-e cmd_args="--command show_transfers pool" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-wallet
 
@@ -130,12 +130,12 @@ wallet-send: network
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--name=monero-wallet \
-		--interactive=true \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=cli \
-		--env=cmd_args="--command transfer "$(recipient_address)" "$(send_amount)""
+		-i \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=cli \
+		-e cmd_args="--command transfer "$(recipient_address)" "$(send_amount)""
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-wallet
@@ -171,12 +171,12 @@ wallet-address:
 		--network-alias=monero-wallet \
 		--hostname=monero-wallet \
 		--name=monero-wallet \
-		--interactive=true \
-		--env=daemon_host="$(daemon_host)" \
-		--env=daemon_port="$(daemon_port)" \
-		--env=password="$(password)" \
-		--env=iface=cli \
-		--env=cmd_args="--command address"
+		-i \
+		-e daemon_host="$(daemon_host)" \
+		-e daemon_port="$(daemon_port)" \
+		-e password="$(password)" \
+		-e iface=cli \
+		-e cmd_args="--command address"
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		monero-wallet
