@@ -235,3 +235,8 @@ i2pd-run: network
 		-p 127.0.0.1:7075:7075 \
 		-v $(HOME)/i2pd_dat:/var/lib/i2pd:rw \
 		-t eyedeekay/monerohost-i2p; true
+
+i2pd-clean:
+	docker rm -f monero-host; true
+
+i2pd-reboot: i2pd i2pd-clean i2pd-run
