@@ -75,6 +75,10 @@ wallet-list: network
 	docker run --network=monero \
 		--rm -ti monero-wallet ls -lahR /home/xmrwallet
 
+wallet-find: network
+	docker run --network=monero \
+		--rm -ti monero-wallet find . -name monero-wallet-cli
+
 wallet-help: network
 	docker run --network=monero \
 		--network-alias=monero-wallet \
