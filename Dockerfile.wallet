@@ -16,7 +16,7 @@ RUN wget https://downloads.getmonero.org/$iface/linux64 && \
         echo "$hash linux64" | sha256sum -c - && \
         tar jxvf linux64 && \
         rm linux64 && \
-        mkdir wallet
+        mkdir wallet /home/xmrwallet/.shared-ringdb -p
 
 RUN chmod a+x monero*/*
 
