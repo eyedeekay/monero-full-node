@@ -11,8 +11,6 @@ else
     /home/xmrwallet/monero-v0.12.0.0/monero-wallet-$iface \
         --wallet-file MoneroWallet \
         --password $password \
-        --rpc-bind-ip 0.0.0.0 \
-        --rpc-bind-port 18082 \
         --daemon-host $daemon_host \
         --daemon-port $daemon_port $cmd_args | tee -a monero-wallet-cli.log
 fi
