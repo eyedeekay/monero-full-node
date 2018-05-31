@@ -162,7 +162,7 @@ wallet-launcher:
 	@echo 'cat monero-wallet-cli.log' | tee -a wallet-launcher
 	chmod +x wallet-launcher
 
-wallet-address:
+wallet-address: wallet-clean network
 	@echo "Monero Wallet Address" | tee walletaddress.md
 	@echo "=====================" | tee -a walletaddress.md
 	@echo "" | tee -a walletaddress.md
