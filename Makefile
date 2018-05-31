@@ -191,19 +191,6 @@ daemon-run: daemon-clean network
 		--restart always \
 		-td monero-full-node
 
-daemon-run-gui: daemon-clean network
-	docker run -d --rm \
-		--network=monero \
-		--network-alias=monero-full-node \
-		--hostname=monero-full-node \
-		--name=monero-full-node \
-		-p 127.0.0.1:18081:18081 \
-		-p 127.0.0.1:18080:18080 \
-		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
-		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
-		-e DISPLAY=$(DISPLAY) \
-		-td monero-full-node
-
 daemon-update: update daemon-reboot
 
 daemon-reboot: daemon daemon-clean daemon-run
