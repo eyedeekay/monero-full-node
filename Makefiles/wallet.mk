@@ -1,3 +1,4 @@
+
 wallet: password
 	docker build --force-rm \
 		--build-arg "hash"="$(hash)" \
@@ -14,7 +15,7 @@ wallet-run: network
 		--network monero \
 		--network-alias monero-wallet \
 		--hostname monero-wallet \
-		--link monero-full-node \
+		--link monero-host-client \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
 		-e password="$(password)" \
@@ -32,7 +33,7 @@ wallet-run-gui: wallet-clean network
 		--network monero \
 		--network-alias monero-wallet \
 		--hostname monero-wallet \
-		--link monero-full-node \
+		--link monero-host-client \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
 		-e password="$(password)" \
@@ -62,7 +63,7 @@ wallet-help: network
 		--network-alias monero-wallet \
 		--hostname monero-wallet \
 		--name monero-wallet \
-		--link monero-full-node \
+		--link monero-host-client \
 		-i \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -77,7 +78,7 @@ wallet-balance: network
 		--network-alias monero-wallet \
 		--hostname monero-wallet \
 		--name monero-wallet \
-		--link monero-full-node \
+		--link monero-host-client \
 		-i \
 		-e daemon_host="$(daemon_host)" \
 		-e daemon_port="$(daemon_port)" \
@@ -92,7 +93,7 @@ wallet-xfers: network
 		--network-alias monero-wallet \
 		--hostname monero-wallet \
 		--name monero-wallet \
-		--link monero-full-node \
+		--link monero-host-client \
 		-i \
 		--rm -ti \
 		-e daemon_host="$(daemon_host)" \
