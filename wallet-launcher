@@ -6,12 +6,11 @@ if [ ! -f MoneroWallet ]; then
         --mnemonic-language English \
         --password $password \
         --daemon-host $daemon_host \
-        --daemon-port $daemon_port | tee -a monero-wallet-generate.log
+        --daemon-port $daemon_port | tee monero-wallet-generate.log
 else
     /home/xmrwallet/monero-v0.12.0.0/monero-wallet-$iface \
         --wallet-file MoneroWallet \
         --password $password \
         --daemon-host $daemon_host \
-        --daemon-port $daemon_port $cmd_args | tee -a monero-wallet-cli.log
+        --daemon-port $daemon_port $cmd_args | tee monero-wallet-cli.log
 fi
-

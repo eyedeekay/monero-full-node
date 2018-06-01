@@ -1,0 +1,16 @@
+#! /usr/bin/env sh
+. /etc/monerocliwallet/monerocliwallet.conf
+docker run --rm -ti --network monero \
+		--network-alias monero-i2pwallet \
+		--hostname monero-i2pwallet \
+		--name monero-i2pwallet \
+		--link monero-full-node \
+		-i \
+		-e daemon_host=monero-host-client \
+		-e daemon_port="$daemon_port" \
+		-e password="$password" \
+		-e iface=cli \
+		-e cmd_args="--command balance" \
+		-v $HOME/Monero:/home/xmrwallet/wallet \
+		-v $HOME/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
+		monero-i2pwallet

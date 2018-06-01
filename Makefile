@@ -23,6 +23,15 @@ update:
 setup: update
 	make build run
 
+install:
+	mkdir -p /etc/monerocliwallet
+	install -m755 bin/wallet-xfers /usr/bin/
+	install -m755 bin/wallet-balance /usr/bin/
+	install -m755 bin/i2pwallet-xfers /usr/bin/
+	install -m755 bin/i2pwallet-balance /usr/bin/
+	install -m644 etc/monerocliwallet/monerocliwallet.conf /etc/monerocliwallet/
+
+
 include config.mk
 include Makefiles/wallet.mk
 include Makefiles/wallet-i2p.mk

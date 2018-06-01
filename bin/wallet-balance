@@ -1,0 +1,16 @@
+#! /usr/bin/env sh
+. /etc/monerocliwallet/monerocliwallet.conf
+docker run --rm -ti --network monero \
+		--network-alias monero-wallet \
+		--hostname monero-wallet \
+		--name monero-wallet \
+		--link monero-host-client \
+		-i \
+		-e daemon_host="$daemon_host" \
+		-e daemon_port="$daemon_port" \
+		-e password="$password" \
+		-e iface=cli \
+		-e cmd_args="--command balance" \
+		-v $HOME/Monero:/home/xmrwallet/wallet \
+		-v $HOME/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
+		monero-wallet
