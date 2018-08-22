@@ -3,7 +3,7 @@ daemon:
 		--build-arg "hash"="$(hash)" \
 		--build-arg "iface"="$(iface)" \
 		-f Dockerfile.server \
-		-t monero-full-node . | tee server-info.log
+		-t eyedeekay/monero-full-node . | tee server-info.log
 
 daemon-clean:
 	docker rm -f monero-full-node; true
@@ -19,7 +19,7 @@ daemon-run: daemon-clean network
 		-p 0.0.0.0:18080:18080 \
 		-v $(HOME)/blockchain-xmr:/home/xmrdaemon/.bitmonero \
 		--restart always \
-		-td monero-full-node
+		-td eyedeekay/monero-full-node
 
 daemon-update: update daemon-reboot
 

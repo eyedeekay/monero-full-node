@@ -74,7 +74,7 @@ i2pwallet-help: network
 		-e cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		--rm -ti monero-i2pwallet
+		-ti eyedeekay/monero-i2pwallet
 
 i2pwallet-balance: network
 	docker run --rm -ti --network monero \
@@ -90,7 +90,7 @@ i2pwallet-balance: network
 		-e cmd_args="--command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-i2pwallet
+		eyedeekay/monero-i2pwallet
 
 i2pwallet-xfers: network
 	docker run --network monero \
@@ -107,7 +107,7 @@ i2pwallet-xfers: network
 		-e cmd_args="--command show_transfers pool" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-i2pwallet
+		eyedeekay/monero-i2pwallet
 
 i2pwallet-send: network
 	docker run --network monero \
@@ -123,7 +123,7 @@ i2pwallet-send: network
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-i2pwallet
+		eyedeekay/monero-i2pwallet
 
 i2pwallet-address: i2pwallet-clean network
 	@echo "Monero i2pwallet Address" | tee i2pwalletaddress.md
@@ -143,9 +143,9 @@ i2pwallet-address: i2pwallet-clean network
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-i2pwallet
+		eyedeekay/monero-i2pwallet
 
 clobber-i2pwallet:
 	docker rm -f monero-i2pwallet; \
-	docker rmi -f monero-i2pwallet; \
+	docker rmi -f eyedeekay/monero-i2pwallet; \
 	docker system prune -f

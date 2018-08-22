@@ -5,7 +5,7 @@ wallet: password
 		--build-arg "iface"="$(iface)" \
 		--build-arg "password"="$(password)" \
 		-f Dockerfile.wallet \
-		-t monero-wallet . | tee wallet-info.log
+		-t eyedeekay/monero-wallet . | tee wallet-info.log
 
 wallet-clean:
 	docker rm -f monero-wallet; true
@@ -27,7 +27,7 @@ wallet-run: network
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
-		-t monero-wallet
+		-t eyedeekay/monero-wallet
 
 wallet-run-gui: wallet-clean network
 	docker run --rm \
@@ -46,7 +46,7 @@ wallet-run-gui: wallet-clean network
 		-i \
 		--volume /tmp/.X11-unix:/tmp/.X11-unix:ro \
 		-e DISPLAY=$(DISPLAY) \
-		-t monero-wallet
+		-t eyedeekay/monero-wallet
 
 wallet-update: update wallet-reboot
 
@@ -58,7 +58,7 @@ wallet-list: network
 
 wallet-find: network
 	docker run --network monero \
-		--rm -ti monero-wallet find . -name monero-wallet-cli
+		--rm -ti eyedeekay/monero-wallet find . -name monero-wallet-cli
 
 wallet-help: network
 	docker run --network monero \
@@ -74,7 +74,7 @@ wallet-help: network
 		-e cmd_args="--help" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		--rm -ti monero-wallet
+		--rm -ti eyedeekay/monero-wallet
 
 wallet-balance: network
 	docker run --rm -ti --network monero \
@@ -90,7 +90,7 @@ wallet-balance: network
 		-e cmd_args="--command balance" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-wallet
+		eyedeekay/monero-wallet
 
 wallet-xfers: network
 	docker run --network monero \
@@ -107,7 +107,7 @@ wallet-xfers: network
 		-e cmd_args="--command show_transfers pool" \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-wallet
+		eyedeekay/monero-wallet
 
 wallet-send: network
 	docker run --network monero \
@@ -123,7 +123,7 @@ wallet-send: network
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-wallet
+		eyedeekay/monero-wallet
 
 wallet-address: wallet-clean network
 	@echo "Monero Wallet Address" | tee walletaddress.md
@@ -143,7 +143,7 @@ wallet-address: wallet-clean network
 		--rm -ti \
 		-v $(HOME)/Monero:/home/xmrwallet/wallet \
 		-v $(HOME)/.Monero_shared_ringdb:/home/xmrwallet/.shared-ringdb \
-		monero-wallet
+		eyedeekay/monero-wallet
 
 clobber-wallet:
 	docker rm -f monero-wallet; \

@@ -6,3 +6,4 @@ Dockerfile.monitor
 i2pd_client
 i2pd_client_dat
 shared_ringdb
+i2pd_dat
